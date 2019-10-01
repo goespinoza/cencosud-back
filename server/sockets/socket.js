@@ -9,8 +9,8 @@ io.on('connection', client => {
         callback(result);
     });
 
-    setInterval(async () => {
+    /* setInterval(async () => {
         const result = await coordsCtrl.getCoords()
         client.emit('climaCiudades', result);
-    }, 10000);
+    }, 10000); */
 })
