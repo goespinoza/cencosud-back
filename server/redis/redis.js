@@ -8,6 +8,14 @@ const
 
 client.hget = util.promisify(client.hget)
 
+client.on('connect', () => {
+    console.log(`Conectado a redis en el puerto: ${config.redisPort}`);
+});
+
+client.on('error', err => {
+    console.log(`Error en redis: ${err}`);
+});
+
 const hashSetAsync = async (hash, key, value) => {
     client.hset(hash, key, value);
 }
