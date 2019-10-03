@@ -1,4 +1,4 @@
-## introducción
+## Introducción
 
 Se desea mostrar en pantalla completa la hora y la temperatura y hora de las siguientes ciudades:
 Santiago (CL), Zurich (CH), Auckland (NZ), Sydney (AU), Londres (UK), Georgia (USA)
