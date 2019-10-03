@@ -5,7 +5,7 @@ const
     redis = require('redis'),
     client = redis.createClient(`${config.redisURL}${config.redisPort}`),
     climaService = require('../services/clima'),
-    util = require('util')
+    util = require('util');
 
 client.get = util.promisify(client.get)
 
@@ -26,7 +26,7 @@ const getCoords = async () => {
         let promises = [];
         let ciudades = await client.get('coords');
         ciudades = JSON.parse(ciudades);
-        ciudades.forEach(ciudad => promises.push(climaService.getClima(ciudad)));
+        ciudades.forEach(coords => promises.push(climaService.getClima(coords)));
         result = await Promise.all(promises);
         for (let i = 0; i < ciudades.length; i++) {
             ciudades[i]['clima'] = result[i];
