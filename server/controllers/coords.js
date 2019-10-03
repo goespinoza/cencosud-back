@@ -2,11 +2,14 @@
 
 const
     climaService = require('../services/clima'),
-    redisClient = require('../redis/redis');
+    redisClient = require('../redis/redis'),
+    ciudades = require('../../ciudades')
 
 const insCoords = async (req, res) => {
     try {
-        redisClient.hashSetAsync('coords', JSON.stringify(req.body));
+        ciudades.forEach(ciudad => {
+            redisClient.hashSetAsync('ciudad', ciudad.key, `${ciudad.lat},${ciudad.lng}`);
+        });
         res.status(200).send({
             ok: true
         });
@@ -18,9 +21,10 @@ const insCoords = async (req, res) => {
 const getCoords = async () => {
     try {
         let promises = [];
-        let ciudades = await redisClient.hashGetAsync('coords');
-        ciudades = JSON.parse(ciudades);
-        ciudades.forEach(coords => promises.push(climaService.getClima(coords)));
+        for (let i = 0; i < ciudades.length; i++) {
+            const coords = await redisClient.hashGetAsync('ciudad', ciudades[i].key);
+            promises.push(await climaService.getClima(coords));
+        }
         let result = await Promise.all(promises);
         for (let i = 0; i < ciudades.length; i++) {
             ciudades[i]['clima'] = result[i];

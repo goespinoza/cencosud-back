@@ -6,23 +6,17 @@ const
     client = redis.createClient(`${config.redisURL}${config.redisPort}`),
     util = require('util');
 
-client.get = util.promisify(client.get)
+client.hget = util.promisify(client.hget)
 
-const hashSetAsync = async (hash, value) => {
-    client.set(hash, value);
-}
-
-const hashGetAsync = async (hash) => {
-    return client.get(hash);
-}
-
-const hashHSetAsync = async (hash, key, value) => {
+const hashSetAsync = async (hash, key, value) => {
     client.hset(hash, key, value);
+}
+
+const hashGetAsync = async (hash, key) => {
+    return client.hget(hash, key);
 }
 
 module.exports = {
     hashSetAsync,
-    hashGetAsync,
-    hashHSetAsync,
-    client
+    hashGetAsync
 }

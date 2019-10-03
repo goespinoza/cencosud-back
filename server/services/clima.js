@@ -3,15 +3,17 @@
 const
     config = require('../../config'),
     axios = require('axios'),
-    redisClient = require('../redis/redis')
+    redisClient = require('../redis/redis'),
+    moment = require('moment');
+
 
 const getClima = async (coords) => {
     try {
         ifRequestFailed();
-        const { data: result } = await axios.get(`https://api.darksky.net/forecast/${config.configKey2.secret}/${coords.lat},${coords.lng}?exclude={minutely,hourly,daily,flags}`);
+        const { data: result } = await axios.get(`https://api.darksky.net/forecast/${config.configKey.secret2}/${coords}?exclude={minutely,hourly,daily,flags}`);
         return result;
     } catch (error) {
-        await redisClient.hashHSetAsync('api.errors', moment().unix(), error.message);
+        await redisClient.hashSetAsync('api.errors', moment().unix(), error.message);
     }
 }
 
