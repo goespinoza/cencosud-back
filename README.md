@@ -13,7 +13,6 @@ El temas el diseño esta 100% en tus manos, nos interesa más la funcionalidad y
 Al terminar el código de ambos servicios por favor compartir los enlaces de github y las instrucciones de como iniciarlos en el archivo README.md correspondiente de cada repositorio.
 
 ---
-
 ## Instalación
 
 1. Click **Clone**.
