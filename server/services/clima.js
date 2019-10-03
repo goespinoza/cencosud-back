@@ -10,7 +10,7 @@ const
 const getClima = async (coords) => {
     try {
         ifRequestFailed();
-        const { data: result } = await axios.get(`https://api.darksky.net/forecast/${config.configKey.secret2}/${coords}?exclude={minutely,hourly,daily,flags}`);
+        const { data: result } = await axios.get(`https://api.darksky.net/forecast/${config.configKey.secret}/${coords}?exclude={minutely,hourly,daily,flags}`);
         return result;
     } catch (error) {
         await redisClient.hashSetAsync('api.errors', moment().unix(), error.message);
